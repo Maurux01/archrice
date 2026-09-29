@@ -21,7 +21,7 @@ A complete and modern Hyprland configuration for Arch Linux with dynamic login s
 - **Color schemes** - Consistent theming across all applications
 
 ### 💻 **Development Environment**
-- **Neovim** - Fully configured editor with LSP, AI assistants, and plugins
+- **Neovim** - Fully configured editor with LSP, and plugins for fullstack
 - **Multiple languages** - Node.js, Python, Rust, Go, Java, C/C++
 - **Docker support** - Docker, Docker Compose, Podman, Buildah
 - **Git tools** - LazyGit, Git signs, blame, conflict resolution
