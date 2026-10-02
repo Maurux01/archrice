@@ -129,7 +129,6 @@ create_backup() {
     print_step "Backup de archivos de configuración..."
     local config_files=(
         "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.profile"
-        "$HOME/.zshrc" "$HOME/.zshenv" "$HOME/.config/fish"
         "$HOME/.local/share/applications" "$HOME/.local/bin"
         "$HOME/.tmux.conf" "$HOME/.tmux"
     )
@@ -170,7 +169,7 @@ uninstall_packages() {
     local hyprland_packages=(
         "hyprland" "waybar" "eww" "swww" "wofi" "mako" "swaylock"
         "swayidle" "grim" "slurp" "wl-clipboard" "xdg-desktop-portal-hyprland"
-        "xdg-desktop-portal-gtk" "kitty" "neovim" "fish" "starship"
+        "xdg-desktop-portal-gtk" "kitty" "neovim" "starship"
         "zoxide" "tmux"
     )
     
@@ -274,7 +273,6 @@ clean_config_files() {
     
     print_step "Eliminando configuraciones de terminal..."
     rm -rf "$HOME/.config/kitty" 2>/dev/null || true
-    rm -rf "$HOME/.config/fish" 2>/dev/null || true
     rm -rf "$HOME/.config/tmux" 2>/dev/null || true
     rm -f "$HOME/.tmux.conf" 2>/dev/null || true
     rm -rf "$HOME/.tmux" 2>/dev/null || true
@@ -398,29 +396,13 @@ restore_default_configs() {
     print_section "Restaurando configuraciones por defecto..."
     
     print_step "Creando configuraciones básicas..."
-    
-    # Fish config básico
-    mkdir -p "$HOME/.config/fish"
-    cat > "$HOME/.config/fish/config.fish" << 'EOF'
-# Fish shell configuration
-set -g fish_greeting ""
 
-# Add local bin to PATH
-set -gx PATH $HOME/.local/bin $PATH
-EOF
-    
     # Bash config básico
     cat > "$HOME/.bashrc" << 'EOF'
 # ~/.bashrc
 export PATH="$HOME/.local/bin:$PATH"
 EOF
-    
-    # Zsh config básico
-    cat > "$HOME/.zshrc" << 'EOF'
-# ~/.zshrc
-export PATH="$HOME/.local/bin:$PATH"
-EOF
-    
+
     print_success "Configuraciones por defecto restauradas"
 }
 
@@ -455,7 +437,7 @@ verify_uninstall() {
     
     # Verificar que los paquetes principales fueron desinstalados
     local packages_to_check=(
-        "hyprland" "waybar" "eww" "kitty" "fish" "neovim"
+        "hyprland" "waybar" "eww" "kitty" "neovim"
     )
     
     for pkg in "${packages_to_check[@]}"; do

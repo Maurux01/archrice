@@ -1,0 +1,64 @@
+/* =============================================================================
+ * archrice · wofi — Gruvbox Dark (FASE 3)
+ * bg #282828 · bg1 #3c3836 · fg #ebdbb2 · yellow #d79921 · gray #a89984
+ * ========================================================================== */
+
+window {
+  background-color: #282828;
+  border: 2px solid #d79921;
+  border-radius: 10px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 14px;
+}
+
+#input {
+  background-color: #3c3836;
+  color: #ebdbb2;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 8px;
+}
+
+#input:focus {
+  border: 1px solid #d79921;
+}
+
+#inner-box {
+  background-color: transparent;
+  padding: 0 8px 8px 8px;
+}
+
+#outer-box {
+  background-color: transparent;
+  padding: 0;
+}
+
+#scroll {
+  background-color: transparent;
+}
+
+#entry {
+  background-color: transparent;
+  color: #ebdbb2;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+#entry:selected {
+  background-color: #d79921;
+  color: #282828;
+}
+
+#entry:selected #text {
+  color: #282828;
+  font-weight: bold;
+}
+
+#text {
+  color: #ebdbb2;
+}
+
+#img {
+  margin-right: 8px;
+}

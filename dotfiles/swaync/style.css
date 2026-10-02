@@ -1,0 +1,134 @@
+/* =============================================================================
+ * archrice · swaync — Gruvbox Dark (FASE 3)
+ * bg #282828 · bg1 #3c3836 · bg2 #504945 · fg #ebdbb2 · gray #a89984
+ * red #cc241d · green #98971a · yellow #d79921 · blue #458588 · aqua #689d6a
+ * ========================================================================== */
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+}
+
+/* --- floating notifications --- */
+.notification-row {
+  background: transparent;
+  margin: 6px 10px 0 10px;
+}
+
+.notification-row .notification-background {
+  background: transparent;
+  padding: 0;
+}
+
+.notification {
+  background: #3c3836;
+  color: #ebdbb2;
+  border: 2px solid #504945;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.notification.critical {
+  border-color: #cc241d;
+}
+
+.notification.low {
+  border-color: #504945;
+}
+
+.notification .summary {
+  color: #d79921;
+  font-weight: bold;
+}
+
+.notification .body {
+  color: #ebdbb2;
+}
+
+.notification .close-button {
+  background: #504945;
+  color: #ebdbb2;
+  border-radius: 6px;
+  margin: 4px;
+}
+
+.notification .close-button:hover {
+  background: #cc241d;
+  color: #282828;
+}
+
+/* --- control center --- */
+.control-center {
+  background: #282828;
+  color: #ebdbb2;
+  border: 2px solid #3c3836;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.widget-title {
+  color: #d79921;
+  font-weight: bold;
+  margin: 4px 8px 8px 8px;
+}
+
+.widget-title button {
+  background: #3c3836;
+  color: #ebdbb2;
+  border-radius: 8px;
+  padding: 4px 12px;
+}
+
+.widget-title button:hover {
+  background: #cc241d;
+  color: #282828;
+}
+
+.widget-dnd {
+  background: #3c3836;
+  color: #ebdbb2;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 4px 8px;
+}
+
+.widget-dnd switch {
+  background: #504945;
+  border-radius: 12px;
+}
+
+.widget-dnd switch:checked {
+  background: #d79921;
+}
+
+.widget-dnd switch slider {
+  background: #ebdbb2;
+  border-radius: 10px;
+}
+
+.widget-notifications {
+  background: transparent;
+}
+
+.widget-mpris {
+  background: #3c3836;
+  border-radius: 10px;
+  margin: 8px;
+  padding: 8px;
+}
+
+.widget-mpris button {
+  color: #a89984;
+}
+
+.widget-mpris button:hover {
+  color: #d79921;
+}
+
+.blank-window {
+  background: transparent;
+}

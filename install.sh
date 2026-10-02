@@ -13,7 +13,7 @@
 #   - DM: SDDM + sugar-candy (Gruvbox en FASE 4)
 #   - Bar: Waybar
 #   - Launcher: wofi + rofi-wayland (ambos nativos Wayland)
-#   - Terminal: kitty + alacritty, shell zsh + starship
+#   - Terminal: kitty (binario) · shell: bash + starship (configs en tu otro repo)
 #   - Notificaciones: swaync + libnotify
 #   - Audio: PipeWire + WirePlumber + pavucontrol + pamixer + playerctl + wpctl
 #   - Red/BT: NetworkManager + nm-applet + blueman + bluez
@@ -85,8 +85,8 @@ PACMAN_PKGS=(
   sddm swww hyprlock hypridle
   # Bar + launcher + notificaciones
   waybar wofi rofi-wayland swaync libnotify
-  # Terminal + shell + prompt
-  kitty alacritty zsh starship
+  # Terminal + prompt (bash config en tu otro repo)
+  kitty starship
   # Audio (PipeWire nativo, wpctl viene en wireplumber)
   pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
   pavucontrol pamixer playerctl
@@ -155,15 +155,10 @@ main() {
   systemctl --user enable pipewire.service pipewire-pulse.service wireplumber.service 2>/dev/null || warn "Servicios user pipewire se activarán al reiniciar"
   ok "Servicios habilitados."
 
-  log "Paso 6/6: Directorios base + shell..."
+  log "Paso 6/6: Directorios base..."
   mkdir -p "$HOME/.config" "$HOME/Pictures/Wallpapers" "$HOME/.local/bin" "$HOME/.local/share/fonts"
   xdg-user-dirs-update 2>/dev/null || true
-  # zsh como shell por defecto (sin forzar si ya es zsh)
-  if [ "${SHELL:-}" != "/usr/bin/zsh" ] && [ "${SHELL:-}" != "/bin/zsh" ]; then
-    if command -v zsh >/dev/null 2>&1; then
-      chsh -s "$(command -v zsh)" || warn "No se pudo cambiar a zsh con chsh. Hazlo manual: chsh -s /usr/bin/zsh"
-    fi
-  fi
+  # Shell: bash (tu config vive en otro repo; no se toca chsh)
   fc-cache -fv >/dev/null 2>&1 || true
   ok "Directorios listos."
 
@@ -179,7 +174,6 @@ main() {
   echo -e "  grim/slurp: $(command -v grim >/dev/null && command -v slurp >/dev/null && echo OK || echo FALTA)"
   echo -e "  sddm     : $(command -v sddm >/dev/null && echo OK || echo FALTA)"
   echo -e "  starship : $(command -v starship >/dev/null && echo OK || echo FALTA)"
-  echo -e "  zsh      : $(command -v zsh >/dev/null && echo OK || echo FALTA)"
   echo ""
   echo -e "${YELLOW}Siguiente: reinicia, entra en Hyprland y avísame para pasar a FASE 2 (hyprland.conf + waybar Gruvbox).${NC}"
   echo -e "Si algo falló, revisa arriba y re-ejecuta: ./install.sh"

@@ -1,0 +1,96 @@
+/* =============================================================================
+ * archrice · rofi-wayland — Gruvbox Dark (FASE 3)
+ * Loaded as ~/.config/rofi/config.rasi  (SUPER+Space)
+ * bg #282828 · bg1 #3c3836 · bg2 #504945 · fg #ebdbb2 · gray #a89984
+ * yellow #d79921 · red #cc241d · blue #458588
+ * ========================================================================== */
+
+configuration {
+  modi: "drun";
+  show-icons: true;
+  icon-theme: "Papirus";
+  font: "JetBrainsMono Nerd Font 11";
+  drun-display-format: "{name}";
+  display-drun: "Apps";
+  location: 0;
+  width: 550;
+  lines: 10;
+  fixed-num-lines: true;
+  cycle: true;
+  sort: true;
+  sorting-method: "fzf";
+  matching: "fuzzy";
+  hover-select: true;
+}
+
+* {
+  bg: #282828;
+  bg1: #3c3836;
+  bg2: #504945;
+  fg: #ebdbb2;
+  gray: #a89984;
+  yellow: #d79921;
+  red: #cc241d;
+  background-color: transparent;
+  font: "JetBrainsMono Nerd Font 11";
+}
+
+window {
+  background-color: @bg;
+  border: 2px solid @yellow;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+mainbox {
+  background-color: transparent;
+  children: [ inputbar, listview ];
+}
+
+inputbar {
+  background-color: @bg1;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 0 0 8px 0;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  text-color: @yellow;
+  margin: 0 8px 0 0;
+}
+
+entry {
+  text-color: @fg;
+  placeholder: "Search";
+  placeholder-color: @gray;
+}
+
+listview {
+  background-color: transparent;
+  lines: 10;
+  fixed-height: true;
+  scrollbar: false;
+  spacing: 2px;
+}
+
+element {
+  background-color: transparent;
+  text-color: @fg;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+element selected {
+  background-color: @yellow;
+  text-color: @bg;
+}
+
+element-text selected {
+  text-color: @bg;
+}
+
+element-icon {
+  size: 24px;
+  margin: 0 8px 0 0;
+}

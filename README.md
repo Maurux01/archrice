@@ -27,7 +27,7 @@ Strictly Wayland-native, exclusively Gruvbox Dark, tuned for smooth performance.
 | Display manager | SDDM + sugar-candy theme adapted to Gruvbox |
 | Bar | Waybar (minimal, essential info only) |
 | Launcher | wofi + rofi-wayland (both Wayland-native) |
-| Terminal | kitty + alacritty, shell `zsh` + `starship` prompt |
+| Terminal | kitty (binary) · shell `bash` + `starship` (configs in your other repo) |
 | Notifications | swaync + libnotify |
 | Audio | PipeWire + WirePlumber (`wpctl`) + pavucontrol + pamixer + playerctl |
 | Network / Bluetooth | NetworkManager + nm-applet + blueman + bluez |
@@ -62,7 +62,7 @@ reboot
 3. Installs all official packages (`pacman -S --needed`, ~90 packages, all Wayland-native).
 4. Installs AUR packages: sugar-candy SDDM theme, Gruvbox GTK/icon themes, `grimblast`, `hyprpicker`, `wlogout`.
 5. Enables services: `NetworkManager`, `bluetooth`, `sddm` (system) and `pipewire`/`wireplumber` (user).
-6. Creates base dirs (`~/.config`, `~/Pictures/Wallpapers`, `~/.local/bin`), sets `zsh` as default shell, refreshes font cache, then prints a verification checklist.
+6. Creates base dirs (`~/.config`, `~/Pictures/Wallpapers`, `~/.local/bin`), refreshes font cache (shell untouched: bash lives in your other repo), then prints a verification checklist.
 
 Verify after install:
 
@@ -85,7 +85,7 @@ It creates a timestamped backup (`~/.archriced-backup-*`), removes packages and 
 
 - [x] Phase 1 — `install.sh`: all dependencies (Arch-only, Wayland-only, Gruvbox).
 - [ ] Phase 2 — `hyprland.conf` (smooth basic animations, full SUPER keybinds) + Waybar Gruvbox config.
-- [ ] Phase 3 — swaync, wofi/rofi-wayland, kitty/alacritty, `starship.toml` in exact Gruvbox.
+- [ ] Phase 3 — swaync + wofi/rofi-wayland in exact Gruvbox (kitty/starship/bash configs live in your other repo).
 - [ ] Phase 4 — screenshot/OBS helper scripts in `~/.local/bin`, SDDM sugar-candy adapted to Gruvbox.
 - [ ] Phase 5 — polkit agent autostart + minimal Gruvbox wallpaper.
 
