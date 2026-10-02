@@ -231,7 +231,7 @@ uninstall_packages() {
     
     print_step "Desinstalando fuentes y temas..."
     local theme_packages=(
-        "catppuccin-gtk-theme" "papirus-icon-theme" "bibata-cursor-theme"
+        "catppuccin-gtk-theme" "gruvbox-material-icon-theme-git" "bibata-cursor-theme"
         "adwaita-icon-theme" "gnome-themes-extra" "nerd-fonts-complete"
         "noto-fonts" "noto-fonts-emoji" "ttf-dejavu" "ttf-liberation"
         "ttf-jetbrains-mono"
@@ -286,8 +286,11 @@ clean_config_files() {
     rm -rf "$HOME/.config/eww" 2>/dev/null || true
     rm -rf "$HOME/.config/waybar" 2>/dev/null || true
     rm -rf "$HOME/.config/wofi" 2>/dev/null || true
+    rm -rf "$HOME/.config/rofi" 2>/dev/null || true
+    rm -rf "$HOME/.config/swaync" 2>/dev/null || true
     rm -rf "$HOME/.config/mako" 2>/dev/null || true
     rm -rf "$HOME/.config/swww" 2>/dev/null || true
+    rm -f "$HOME/.local/bin/screenshot.sh" "$HOME/.local/bin/obs-toggle.sh" 2>/dev/null || true
     
     print_step "Eliminando configuraciones de portapapeles..."
     rm -rf "$HOME/.config/cliphist" 2>/dev/null || true

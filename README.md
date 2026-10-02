@@ -36,7 +36,7 @@ Strictly Wayland-native, exclusively Gruvbox Dark, tuned for smooth performance.
 | File managers | Thunar (+ gvfs/tumbler) and yazi (terminal) |
 | Auth agent | polkit-gnome + gnome-keyring (required for nm-applet/blueman) |
 | Brightness | brightnessctl |
-| Fonts / icons / cursor | JetBrainsMono Nerd, Hack Nerd, Noto (+emoji), Papirus, Bibata |
+| Fonts / icons / cursor | JetBrainsMono Nerd + Noto (+emoji) · Gruvbox-Material-Dark icons · Bibata cursor |
 | GTK / icons (AUR) | gruvbox-material-gtk-theme, gruvbox-material-icon-theme |
 
 ## Requirements
@@ -100,8 +100,8 @@ It creates a timestamped backup (`~/.archriced-backup-*`), removes packages and 
 └── README.md       # this file (single source of documentation)
 ```
 
-Utility scripts shipped under `dotfiles/scripts/` (screenshots, wallpaper next/prev/random,
-lock screen helpers) are part of the rice and are installed to `~/.local/bin` / `~/.config/scripts`.
+Utility scripts are gone from the repo: `install.sh` generates `screenshot.sh` +
+`obs-toggle.sh` directly into `~/.local/bin` during deploy. No separate scripts folder.
 
 ## Troubleshooting
 

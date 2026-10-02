@@ -125,7 +125,7 @@ return {
       format = {
         notification = {
           style = {
-            font = "AdwaitaMono Nerd Font",
+            font = "JetBrainsMono Nerd Font",
             size = 8, -- aún más pequeño
             padding = 0, -- sin padding
             border_radius = 2, -- más compacto

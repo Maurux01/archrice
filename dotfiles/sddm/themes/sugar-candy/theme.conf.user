@@ -1,0 +1,25 @@
+# =============================================================================
+# archrice · sugar-candy overrides — Gruvbox Dark (FASE 4)
+# =============================================================================
+# Deploy: sudo cp theme.conf.user /usr/share/sddm/themes/sugar-candy/theme.conf.user
+# Wallpaper: sudo cp ~/Pictures/Wallpapers/gruvbox.png /usr/share/backgrounds/
+#   (SDDM runs as its own user, so the background must live outside $HOME.)
+# Unknown keys are ignored by sugar-candy — safe to keep.
+# =============================================================================
+
+[General]
+Background="/usr/share/backgrounds/gruvbox.png"
+DimBackgroundImage="0.0"
+HaveFormBackground=true
+FormPosition="center"
+PartialBlur=true
+BlurRadius=30
+FullBlur=false
+ScaleImageCropped=true
+ForceLastUser=true
+
+# --- Gruvbox Dark ---
+# bg #282828 · fg #ebdbb2 · yellow #d79921
+AccentColor="#d79921"
+BackgroundColor="#282828"
+MainColor="#ebdbb2"
