@@ -1,55 +1,116 @@
-/* Ultra-compact Waybar style */
+/* =============================================================================
+ * archrice · Waybar — Gruvbox Dark, minimal (FASE 2)
+ * bg #282828 · bg1 #3c3836 · fg #ebdbb2 · yellow #d79921 · red #cc241d
+ * green #98971a · blue #458588 · aqua #689d6a · gray #a89984
+ * ========================================================================== */
 
 * {
-  font-size: 8px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
   min-height: 0;
-  padding: 0 1px;
-  margin: 0;
-  border-radius: 2px;
+  border: none;
+  border-radius: 0;
   box-shadow: none;
 }
 
 window#waybar {
-  background: rgba(30, 30, 46, 0.80);
-  border-radius: 3px;
-  min-height: 0;
-  max-height: 24px;
-  padding: 0 2px;
-  margin: 0 2px;
-  box-shadow: none;
+  background: #282828;
+  color: #ebdbb2;
+  border-bottom: 2px solid #3c3836;
 }
 
+/* --- generic module pill --- */
+#workspaces,
+#clock,
+#pulseaudio,
+#network,
+#bluetooth,
+#battery,
+#tray,
+#custom-power {
+  background: #3c3836;
+  color: #ebdbb2;
+  border-radius: 8px;
+  padding: 0 12px;
+  margin: 4px 3px;
+}
+
+/* --- workspaces --- */
+#workspaces {
+  padding: 0 6px;
+}
 #workspaces button {
-  padding: 0 3px;
-  margin: 0 2px;
-  border-radius: 2px;
-  min-width: 0;
-  min-height: 0;
+  color: #a89984;
+  background: transparent;
+  border-radius: 6px;
+  padding: 0 8px;
+  margin: 4px 2px;
+}
+#workspaces button:hover {
+  background: #504945;
+  color: #ebdbb2;
+}
+#workspaces button.active {
+  background: #d79921;
+  color: #282828;
+  font-weight: bold;
+}
+#workspaces button.urgent {
+  background: #cc241d;
+  color: #ebdbb2;
 }
 
-#clock, #battery, #pulseaudio, #network, #tray, #backlight, #custom-launcher, #custom-power, #custom-weather {
-  padding: 0 2px;
-  margin: 0 2px;
-  border-radius: 2px;
-  min-width: 0;
-  min-height: 0;
+/* --- per-module accents --- */
+#clock {
+  color: #d79921;
+  font-weight: bold;
 }
-
+#pulseaudio {
+  color: #98971a;
+}
+#pulseaudio.muted {
+  color: #a89984;
+}
+#network {
+  color: #458588;
+}
+#network.disconnected {
+  color: #cc241d;
+}
+#bluetooth {
+  color: #689d6a;
+}
+#bluetooth.off {
+  color: #a89984;
+}
+#battery {
+  color: #d79921;
+}
+#battery.charging {
+  color: #98971a;
+}
+#battery.warning {
+  color: #d65d0e;
+}
+#battery.critical {
+  color: #cc241d;
+}
 #tray {
-  padding: 0 2px;
-  margin: 0 2px;
+  padding: 0 10px;
+}
+#custom-power {
+  color: #cc241d;
+  font-size: 15px;
+  padding: 0 14px;
+}
+#custom-power:hover {
+  background: #cc241d;
+  color: #282828;
 }
 
-/* Iconos SVG y FontAwesome */
-#workspaces button > *,
-#clock > *,
-#battery > *,
-#pulseaudio > *,
-#network > *,
-#tray > *,
-#backlight > *,
-#custom-launcher > *,
-#custom-power > *,
-#custom-weather > * {
-  font-size: 9px !important;
-  ma
+tooltip {
+  background: #282828;
+  color: #ebdbb2;
+  border: 1px solid #504945;
+  border-radius: 8px;
+}
