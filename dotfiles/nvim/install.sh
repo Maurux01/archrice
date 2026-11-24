@@ -18,4 +18,4 @@ cat << EOF
 - Usa <leader>gg para LazyGit y <leader>dd para LazyDocker en terminal flotante.
 - Disfruta de autocompletado y formateo moderno.
 
-EOF 
+EOF

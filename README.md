@@ -1,18 +1,20 @@
 # archrice — Gruvbox Hyprland Daily Driver (Arch Linux, Wayland-only)
 
-A minimal, fast and aesthetically consistent Hyprland setup for Arch Linux.
-Strictly Wayland-native, exclusively Gruvbox Dark, tuned for smooth performance.
+Rice minimalista y rápido para Arch Linux con Hyprland. Estrictamente Wayland,
+exclusivamente Gruvbox Dark y ajustado para rendimiento. `install.sh` instala
+**todo** el stack y despliega **todas** las configuraciones; `uninstall.sh`
+revierte solo lo que este rice instaló.
 
 ## Golden rules
 
-1. **Wayland only.** No X11 tools (no picom, xrandr, feh, maim, xclip, non-Wayland rofi).
-2. **Gruvbox Dark everywhere.** Bar, launcher, terminal, notifications, SDDM, GTK — one palette.
-3. **Performance first.** Lightweight `bezier` animations, no exaggerated bounce, no heavy blur.
-4. **Arch Linux only.** `pacman` + `yay`/`paru`. No Debian/Kali/apt code paths.
+1. **Wayland only.** No X11 (no picom, xrandr, feh, maim, xclip ni rofi X11).
+2. **Gruvbox Dark everywhere.** Barra, launcher, terminal, notificaciones, SDDM y lockscreen comparten paleta.
+3. **Performance first.** Animaciones `bezier` cortas, sin bounce, blur pequeño, sin sombras.
+4. **Arch Linux only.** `pacman` + `yay`/`paru`. Sin rutas Debian/Kali/apt.
 
-### Gruvbox Dark reference palette
+### Gruvbox Dark (referencia)
 
-| Name | Hex |
+| Nombre | Hex |
 |---|---|
 | bg / bg_h / bg1 / bg2 | `#282828` / `#1d2021` / `#3c3836` / `#504945` |
 | fg / gray | `#ebdbb2` / `#a89984` |
@@ -21,103 +23,153 @@ Strictly Wayland-native, exclusively Gruvbox Dark, tuned for smooth performance.
 
 ## Stack
 
-| Component | Choice |
+| Componente | Elección |
 |---|---|
-| Compositor | Hyprland + `xdg-desktop-portal-hyprland/gtk`, `swww`, `hyprlock`, `hypridle` |
-| Display manager | SDDM + sugar-candy theme adapted to Gruvbox |
-| Bar | Waybar (minimal, essential info only) |
-| Launcher | wofi + rofi-wayland (both Wayland-native) |
-| Terminal | kitty (binary) · shell `bash` + `starship` (configs in your other repo) |
-| Notifications | swaync + libnotify |
+| Compositor | Hyprland + `xdg-desktop-portal-hyprland/gtk`, `awww` (binario `swww`), `hyprlock`, `hypridle` |
+| Display manager | SDDM + tema sugar-candy adaptado a Gruvbox |
+| Barra | Waybar (solo info esencial) |
+| Launcher | wofi + `rofi` (paquete oficial que proporciona `rofi-wayland`) |
+| Terminal / editor | kitty, neovim (LazyVim) · `starship` (bash/config en tu otro repo) |
+| Notificaciones | swaync + libnotify |
 | Audio | PipeWire + WirePlumber (`wpctl`) + pavucontrol + pamixer + playerctl |
-| Network / Bluetooth | NetworkManager + nm-applet + blueman + bluez |
-| Screenshots | grim + slurp + wl-clipboard + cliphist + swappy (+ `grimblast`) |
-| Screen recording | OBS Studio (+ `wl-screenrec` for quick CLI captures) |
-| File managers | Thunar (+ gvfs/tumbler) and yazi (terminal) |
-| Auth agent | polkit-gnome + gnome-keyring (required for nm-applet/blueman) |
-| Brightness | brightnessctl |
-| Fonts / icons / cursor | JetBrainsMono Nerd + Noto (+emoji) · Gruvbox-Material-Dark icons · Bibata cursor |
-| GTK / icons (AUR) | gruvbox-material-gtk-theme, gruvbox-material-icon-theme |
+| Red / Bluetooth | NetworkManager + nm-applet + blueman + bluez |
+| Capturas | grim + slurp + wl-clipboard + cliphist + swappy + grimblast |
+| Grabación | OBS Studio (+ `wl-screenrec` desde AUR para capturas rápidas por CLI) |
+| Gestores de archivos | Thunar (+ gvfs/tumbler) e yazi |
+| Agente de autenticación | polkit-gnome + gnome-keyring |
+| Brillo | brightnessctl |
+| Fuentes / iconos / cursor | JetBrainsMono Nerd + Noto (+emoji) · Gruvbox-Material-Dark · Bibata |
 
-## Requirements
+## Requisitos
 
-- Arch Linux (or Arch-based distro with `pacman`) installed.
-- A non-root user with `sudo` access.
-- Internet connection.
+- Arch Linux (o derivada con `pacman`).
+- Usuario no root con `sudo`.
+- Conexión a Internet.
 
-## Quick start
+## Inicio rápido
 
 ```bash
-git clone https://github.com/mauruxu01/archriced.git
-cd archriced
-chmod +x install.sh
+git clone https://github.com/Maurux01/archrice.git
+cd archrice
+chmod +x install.sh uninstall.sh
 ./install.sh
 reboot
 ```
 
-### What `install.sh` does (Phase 1)
+`install.sh` es idempotente: usa `pacman -S --needed` y el AUR helper con
+`--needed`, y hace backup de cualquier config previa en
+`~/.archrice-backup-<timestamp>`.
 
-1. Full system upgrade (`pacman -Syu`).
-2. Installs `yay` if no AUR helper (`yay`/`paru`) is present.
-3. Installs all official packages (`pacman -S --needed`, ~90 packages, all Wayland-native).
-4. Installs AUR packages: sugar-candy SDDM theme, Gruvbox GTK/icon themes, `grimblast`, `hyprpicker`, `wlogout`.
-5. Enables services: `NetworkManager`, `bluetooth`, `sddm` (system) and `pipewire`/`wireplumber` (user).
-6. Creates base dirs (`~/.config`, `~/Pictures/Wallpapers`, `~/.local/bin`), refreshes font cache (shell untouched: bash lives in your other repo), then prints a verification checklist.
+### Qué instala y despliega
 
-Verify after install:
+1. Actualiza el sistema (`pacman -Syu`) e instala `yay` si no hay helper AUR.
+2. Instala 76 paquetes oficiales + 8 paquetes AUR (todos Wayland/Gruvbox).
+3. Habilita `NetworkManager`, `bluetooth` y `sddm`; habilita PipeWire a nivel usuario.
+4. Crea `~/.config`, `~/Pictures/Wallpapers`, `~/Pictures/Screenshots` y `~/.local/bin`.
+5. Despliega las configuraciones en `~/.config/{hypr,waybar,wofi,rofi,swaync,nvim,wlogout}`.
+6. Genera en `~/.local/bin`: `screenshot.sh`, `obs-toggle.sh`, `set-wallpaper.sh`.
+7. Copia los scripts sueltos (`wofi-wifi.sh`, `wallpaper-wipe.sh`, `save_wallpaper.sh`).
+8. Instala el wallpaper Gruvbox en `~/Pictures/Wallpapers/gruvbox.png` y en
+   `/usr/share/backgrounds/gruvbox.png` (lo usa también el greeter de SDDM).
+9. Aplica `/etc/sddm.conf` y `theme.conf.user` de sugar-candy.
+
+Verificación rápida tras reiniciar:
 
 ```bash
 Hyprland --version; waybar --version; wofi --version; wpctl status
 systemctl status NetworkManager bluetooth sddm
 ```
 
-## Uninstall
+## Atajos principales (SUPER = tecla Windows)
+
+| Atajo | Acción |
+|---|---|
+| `SUPER + Return` | kitty |
+| `SUPER + D` / `SUPER + Space` | launcher (wofi / rofi) |
+| `SUPER + B` / `SUPER + Shift + B` | Firefox / ventana privada |
+| `SUPER + E` / `SUPER + Y` | Thunar / yazi en terminal |
+| `SUPER + W` | selector de Wi-Fi (wofi + nmcli) |
+| `SUPER + Escape` / `SUPER + X` | hyprlock / menú de apagado (wlogout) |
+| `SUPER + Shift + O` | iniciar/detener grabación OBS |
+| `SUPER + N` / `SUPER + Shift + N` | panel de notificaciones / No molestar |
+| `Print` / `SUPER + Print` / `SUPER + Shift + Print` | captura de área / monitor / pantalla (archivo + clipboard) |
+| `SUPER + C` | selector de color (copia al clipboard) |
+| `SUPER + R` / `SUPER + Q` / `SUPER + Shift + Q` | recargar Hyprland / cerrar ventana / salir |
+
+El equipo bloquea la sesión a los 5 minutos de inactividad y apaga la pantalla
+a los 7 minutos (configurable en `~/.config/hypr/hypridle.conf`).
+
+## Desinstalación
 
 ```bash
 chmod +x uninstall.sh
 ./uninstall.sh
-# type SI to confirm when asked
+# escribe SI cuando te lo pida
 ```
 
-It creates a timestamped backup (`~/.archriced-backup-*`), removes packages and configs, cleans SDDM/GRUB hooks, restores basic shell configs, and verifies the removal. Re-install anytime with `./install.sh`.
+Crea un backup con timestamp, elimina solo los paquetes y configuraciones que
+install.sh desplegó (incluido `/etc/sddm.conf` y el wallpaper del sistema) y
+**no toca** tu shell, GRUB, Docker, Node, navegadores ni otros paquetes.
 
 ## Roadmap
 
-- [x] Phase 1 — `install.sh`: all dependencies (Arch-only, Wayland-only, Gruvbox).
-- [ ] Phase 2 — `hyprland.conf` (smooth basic animations, full SUPER keybinds) + Waybar Gruvbox config.
-- [ ] Phase 3 — swaync + wofi/rofi-wayland in exact Gruvbox (kitty/starship/bash configs live in your other repo).
-- [ ] Phase 4 — screenshot/OBS helper scripts in `~/.local/bin`, SDDM sugar-candy adapted to Gruvbox.
-- [ ] Phase 5 — polkit agent autostart + minimal Gruvbox wallpaper.
+- [x] Fase 1 — `install.sh`: dependencias (Arch-only, Wayland-only, Gruvbox).
+- [x] Fase 2 — `hyprland.conf` (animaciones suaves, keybinds) + Waybar Gruvbox.
+- [x] Fase 3 — swaync + wofi/rofi en Gruvbox (kitty/starship/bash viven en tu otro repo).
+- [x] Fase 4 — helpers de captura/OBS en `~/.local/bin`, SDDM sugar-candy + wlogout Gruvbox.
+- [x] Fase 5 — polkit-gnome autostart, wallpaper Gruvbox, hypridle + hyprlock.
 
-## Project structure
+## Estructura
 
 ```text
 .
-├── install.sh      # sole installer (Arch-only, Wayland-only, Gruvbox)
-├── uninstall.sh    # sole uninstaller with automatic backup
-├── dotfiles/       # per-app configs (hypr, waybar, wofi, kitty, swaync, sddm, ...)
+├── .gitattributes      # fuerza LF en los scripts (bash en Linux)
+├── install.sh          # instalador único
+├── uninstall.sh        # desinstalador con backup
+├── dotfiles/
+│   ├── hypr/           # hyprland, keybinds, windowrules, monitores, hyprlock, hypridle… (+ temas/shaders de referencia)
+│   ├── waybar/         # config + style.css
+│   ├── wofi/           # config + estilos + wofi-wifi.sh
+│   ├── rofi/           # config.rasi
+│   ├── swaync/         # config.json + style.css
+│   ├── wlogout/        # layout + style.css (Gruvbox)
+│   ├── wallpapers/     # gruvbox.png (usuario + SDDM)
+│   ├── sddm/           # sddm.conf + tema sugar-candy
+│   ├── nvim/           # config LazyVim
+│   └── (eww/, mako/, hyprlock/, grub-themes/)  # referencias legacy, NO se despliegan
+├── tests/container/    # Dockerfile + smoke-test.sh + check-packages.sh
 ├── LICENSE
-└── README.md       # this file (single source of documentation)
+└── README.md
 ```
 
-Utility scripts are gone from the repo: `install.sh` generates `screenshot.sh` +
-`obs-toggle.sh` directly into `~/.local/bin` during deploy. No separate scripts folder.
+Los helpers `screenshot.sh` y `obs-toggle.sh` no están como archivos sueltos:
+`install.sh` los genera directamente en `~/.local/bin`.
+
+## Pruebas
+
+`tests/container/` contiene un contenedor Arch Linux para verificar el rice sin
+necesitar una sesión gráfica: valida sintaxis, JSON, despliegue/desinstalación
+y los nombres de paquetes contra los repos reales. Ver
+[`tests/container/README.md`](tests/container/README.md).
 
 ## Troubleshooting
 
-| Symptom | Fix |
+| Síntoma | Solución |
 |---|---|
-| `pacman not found` | You are not on Arch. This rice is Arch-only by design. |
-| AUR package fails | Re-run: `yay -S <pkg>`, then re-run `./install.sh` (it uses `--needed`, safe to repeat). |
-| No audio | `wpctl status`, `systemctl --user restart pipewire pipewire-pulse wireplumber`. |
-| No network applet / BT permission popup | Ensure `polkit-gnome` autostart (Phase 5) and `systemctl enable NetworkManager bluetooth`. |
-| Fonts show boxes | `fc-cache -fv`, then `fc-list \| grep -i nerd`. |
-| Black screen after login | `Hyprland` from TTY to see logs; check `~/.config/hypr/hyprland.conf` (Phase 2). |
+| `bash: $'\r': command not found` | Estás en Windows con `core.autocrlf=true`. Usa `.gitattributes` (incluido) o ejecuta `dos2unix install.sh uninstall.sh`. |
+| `pacman not found` | No estás en Arch. Este rice es Arch-only por diseño. |
+| Falló un paquete AUR | Reintenta `yay -S <pkg>` y vuelve a ejecutar `./install.sh` (usa `--needed`). |
+| Sin audio | `wpctl status`, `systemctl --user restart pipewire pipewire-pulse wireplumber`. |
+| Sin applet de red / diálogo polkit | Comprueba `exec-once` de polkit-gnome en `hyprland.conf` y `systemctl status NetworkManager bluetooth`. |
+| Fuentes con cuadros | `fc-cache -fv` y `fc-list | grep -i nerd`. |
+| Pantalla negra tras login | Entra por TTY y ejecuta `Hyprland` para ver logs; revisa `~/.config/hypr/hyprland.conf`. |
+| El lock sale en otro monitor | El `hyprlock.conf` usa `monitor =` vacío (todos los monitores); no hardcodees `eDP-1`. |
 
 ## Contributing
 
-Fork, branch, commit, push, open a PR. Keep the golden rules: Wayland-only, Gruvbox Dark, Arch-only, fast.
+Fork, rama, commit, push y PR. Respeta las reglas de oro: Wayland-only,
+Gruvbox Dark, Arch-only y rápido.
 
 ## License
 
-MIT — see `LICENSE`. Use it however you want.
+MIT — ver `LICENSE`. Úsalo como quieras.

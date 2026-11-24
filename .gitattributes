@@ -1,0 +1,8 @@
+# Siempre LF en el working tree: estos scripts se ejecutan con bash en Arch Linux.
+* text=auto eol=lf
+
+# Binarios (no normalizar saltos de línea)
+*.png   binary
+*.jpg   binary
+*.webp  binary
+*.pf2   binary

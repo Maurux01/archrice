@@ -1,0 +1,44 @@
+/* =============================================================================
+ * archrice · wlogout — Gruvbox Dark (FASE 4)
+ * bg #282828 · bg1 #3c3836 · bg2 #504945 · fg #ebdbb2 · yellow #d79921
+ * ========================================================================== */
+
+* {
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+}
+
+window {
+  background-color: rgba(40, 40, 40, 0.75);
+}
+
+button {
+  color: #ebdbb2;
+  background-color: #282828;
+  border: 2px solid #504945;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 18px 10px;
+  padding: 18px 26px;
+  min-width: 140px;
+}
+
+button:hover,
+button:focus,
+button:active {
+  background-color: #d79921;
+  color: #282828;
+  border-color: #d79921;
+  outline: none;
+}
+
+#shutdown:hover,
+#shutdown:focus,
+#shutdown:active {
+  background-color: #cc241d;
+  border-color: #cc241d;
+  color: #ebdbb2;
+}
