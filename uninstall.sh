@@ -53,7 +53,22 @@ confirm() {
   echo -e "${RED}⚠  Esto desinstalará los paquetes y configuraciones de archrice.${NC}"
   echo -e "${YELLOW}   Se creará un backup en: $BACKUP${NC}"
   echo ""
-  read -r -p "Escribe SI para confirmar: " answer
+
+  local answer="" src="${BASH_SOURCE[0]:-$0}"
+  if [ -f "$src" ]; then
+    # Ejecutado desde un archivo: stdin normal (también en los tests).
+    read -r -p "Escribe SI para confirmar: " answer || answer=""
+  elif [ -e /dev/tty ]; then
+    # Ejecutado con `curl ... | bash`: stdin es el propio script, así que
+    # la confirmación se lee desde la terminal.
+    printf 'Escribe SI para confirmar: ' > /dev/tty
+    read -r answer < /dev/tty || answer=""
+    printf '\n' > /dev/tty
+  else
+    # Sin terminal (CI): ARCHRICE_YES=SI permite confirmar de forma no interactiva.
+    answer="${ARCHRICE_YES:-}"
+    [ "$answer" = "SI" ] || die "Sin TTY. Usa ARCHRICE_YES=SI con el comando curl."
+  fi
   [ "$answer" = "SI" ] || { echo "Desinstalación cancelada."; exit 0; }
 }
 
@@ -176,7 +191,7 @@ main() {
   echo ""
   echo -e "${GREEN}════════ DESINSTALACIÓN COMPLETADA ════════${NC}"
   echo "Backup disponible en: $BACKUP"
-  echo "Para volver a instalar: ./install.sh"
+  echo "Para volver a instalar: curl -fsSL https://raw.githubusercontent.com/Maurux01/archrice/main/install.sh | bash"
 }
 
 main "$@"

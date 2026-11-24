@@ -33,6 +33,54 @@ if ! command -v git >/dev/null 2>&1; then
   sudo pacman -Syu --noconfirm --needed git base-devel
 fi
 
+# --- Dotfiles: repo local o descarga temporal (para `curl ... | bash`) ---
+# Si el script se ejecuta suelto (sin dotfiles al lado), descargamos el repo en
+# un temporal. Así basta una URL para instalar, sin clonar el repo a mano.
+# Se puede cambiar la fuente con: ARCHRICE_REPO_URL=<url del tar.gz>
+DOWNLOAD_URL="${ARCHRICE_REPO_URL:-https://github.com/Maurux01/archrice/archive/refs/heads/main.tar.gz}"
+REPO_DIR=""
+TMP_REPO=""
+
+resolve_repo_dir() {
+  local src="${BASH_SOURCE[0]:-$0}"
+  local dir="" candidate
+
+  if [ -n "$src" ] && [ -f "$src" ]; then
+    dir="$(cd "$(dirname "$src")" && pwd)"
+    if [ -d "$dir/dotfiles" ]; then
+      REPO_DIR="$dir"
+      return
+    fi
+  fi
+
+  log "No hay dotfiles locales; descargando de $DOWNLOAD_URL"
+  if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+    log "Instalando curl para descargar los dotfiles..."
+    sudo pacman -S --noconfirm --needed curl
+  fi
+  TMP_REPO="$(mktemp -d)"
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL "$DOWNLOAD_URL" | tar -xz -C "$TMP_REPO"
+  else
+    wget -qO- "$DOWNLOAD_URL" | tar -xz -C "$TMP_REPO"
+  fi
+
+  for candidate in "$TMP_REPO"/*/dotfiles "$TMP_REPO"/dotfiles; do
+    if [ -d "$candidate" ]; then
+      REPO_DIR="$(dirname "$candidate")"
+      ok "Dotfiles descargados en un temporal"
+      return
+    fi
+  done
+  die "No se encontraron dotfiles en la descarga. Revisa ARCHRICE_REPO_URL."
+}
+
+cleanup_tmp_repo() {
+  [ -n "$TMP_REPO" ] && [ -d "$TMP_REPO" ] && rm -rf "$TMP_REPO"
+  return 0
+}
+trap cleanup_tmp_repo EXIT
+
 # --- Helper AUR: yay preferido, paru como alternativa ---
 AUR_HELPER=""
 if command -v yay >/dev/null 2>&1; then
@@ -291,7 +339,7 @@ main() {
   ok "Directorios listos"
 
   log "Paso 7/7: Desplegando dotfiles del rice..."
-  REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  resolve_repo_dir
   deploy_dotfiles "$REPO_DIR"
   ok "Dotfiles desplegados"
 

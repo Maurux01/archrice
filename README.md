@@ -44,9 +44,29 @@ revierte solo lo que este rice instaló.
 
 - Arch Linux (o derivada con `pacman`).
 - Usuario no root con `sudo`.
-- Conexión a Internet.
+- Conexión a Internet y `curl` (necesario para los comandos de una línea).
 
 ## Inicio rápido
+
+### Instalar con un solo comando (sin descargar el repo)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Maurux01/archrice/main/install.sh | bash
+```
+
+El script descarga los dotfiles a un directorio temporal, instala todo el stack
+y despliega las configuraciones. El temporal se borra automáticamente al
+terminar. Después reinicia y entra en la sesión Hyprland desde SDDM.
+
+> Si instalas desde un fork u otra rama, indica también de dónde se sacan los
+> dotfiles (por defecto es `main` de este repo):
+>
+> ```bash
+> ARCHRICE_REPO_URL=https://github.com/TU-USUARIO/archrice/archive/refs/heads/TU-RAMA.tar.gz \
+>   bash -c "$(curl -fsSL https://raw.githubusercontent.com/TU-USUARIO/archrice/TU-RAMA/install.sh)"
+> ```
+
+### Instalar clonando el repo (opción clásica)
 
 ```bash
 git clone https://github.com/Maurux01/archrice.git
@@ -100,6 +120,22 @@ El equipo bloquea la sesión a los 5 minutos de inactividad y apaga la pantalla
 a los 7 minutos (configurable en `~/.config/hypr/hypridle.conf`).
 
 ## Desinstalación
+
+### Con un solo comando (sin descargar el repo)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Maurux01/archrice/main/uninstall.sh | bash
+# escribe SI cuando te lo pida
+```
+
+La confirmación se lee desde la terminal aunque el script llegue por `curl`. En
+un entorno sin TTY (CI, por ejemplo) se puede confirmar así:
+
+```bash
+ARCHRICE_YES=SI bash -c "$(curl -fsSL https://raw.githubusercontent.com/Maurux01/archrice/main/uninstall.sh)"
+```
+
+### Desde el repo
 
 ```bash
 chmod +x uninstall.sh
