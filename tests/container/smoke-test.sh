@@ -131,7 +131,12 @@ pass "sin CRLF"
 
 # ---------------------------------------------------- 4. install.sh ---
 section "install.sh"
+# Config previa de HyDE con waybar duplicado: install.sh debe desactivarla
+mkdir -p "$HOME/.config/hypr/workflows"
+printf 'exec-once = waybar\n' > "$HOME/.config/hypr/workflows/default.conf"
 bash install.sh > "$TEST/install.out" 2>&1 || { tail -40 "$TEST/install.out"; fail "install.sh falló"; }
+grep -q '^exec-once = waybar' "$HOME/.config/hypr/workflows/default.conf" && \
+  fail "quedó un exec-once = waybar duplicado en workflows/default.conf"
 
 for f in hyprland.conf keybindings.conf windowrules.conf monitors.conf hyprlock.conf hypridle.conf; do
   [ -f "$HOME/.config/hypr/$f" ] || fail "falta ~/.config/hypr/$f"
@@ -139,7 +144,7 @@ done
 for d in waybar swaync wofi rofi nvim wlogout; do
   [ -d "$HOME/.config/$d" ] || fail "falta ~/.config/$d"
 done
-for h in screenshot.sh obs-toggle.sh set-wallpaper.sh wofi-wifi.sh wallpaper-wipe.sh save_wallpaper.sh; do
+for h in screenshot.sh obs-toggle.sh set-wallpaper.sh wofi-wifi.sh wallpaper-wipe.sh save_wallpaper.sh restart-waybar.sh; do
   [ -x "$HOME/.local/bin/$h" ] || fail "falta o no es ejecutable ~/.local/bin/$h"
 done
 [ -f "$HOME/Pictures/Wallpapers/gruvbox.png" ] || fail "falta wallpaper de usuario"
@@ -147,6 +152,10 @@ done
 [ -f "$FAKE_ROOT/etc/sddm.conf" ] || fail "falta /etc/sddm.conf"
 grep -q 'hypridle' "$HOME/.config/hypr/hyprland.conf" || fail "hypridle no está en autostart"
 grep -q 'set-wallpaper.sh' "$HOME/.config/hypr/hyprland.conf" || fail "wallpaper no está en autostart"
+[ "$(grep -c '^exec-once = waybar' "$HOME/.config/hypr/hyprland.conf")" -eq 1 ] || \
+  fail "waybar debe tener un único exec-once en hyprland.conf"
+grep -q 'restart-waybar.sh' "$HOME/.config/hypr/keybindings.conf" || \
+  fail "falta el atajo para reiniciar waybar"
 [ -f "$HOME/.config/wlogout/layout" ] && [ -f "$HOME/.config/wlogout/style.css" ] || fail "wlogout no desplegado"
 for h in screenshot.sh obs-toggle.sh set-wallpaper.sh wofi-wifi.sh; do
   bash -n "$HOME/.local/bin/$h" || fail "bash -n ~/.local/bin/$h"
@@ -161,7 +170,7 @@ printf 'SI\n' | bash uninstall.sh > "$TEST/uninstall.out" 2>&1 || { tail -40 "$T
 for d in waybar swaync wofi rofi nvim wlogout; do
   [ ! -d "$HOME/.config/$d" ] || fail "quedó ~/.config/$d"
 done
-for h in screenshot.sh obs-toggle.sh set-wallpaper.sh wofi-wifi.sh; do
+for h in screenshot.sh obs-toggle.sh set-wallpaper.sh wofi-wifi.sh restart-waybar.sh; do
   [ ! -e "$HOME/.local/bin/$h" ] || fail "quedó ~/.local/bin/$h"
 done
 [ ! -e "$FAKE_ROOT/usr/share/backgrounds/gruvbox.png" ] || fail "quedó el wallpaper del sistema"

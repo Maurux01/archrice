@@ -88,7 +88,7 @@ reboot
 4. Crea `~/.config`, `~/Pictures/Wallpapers`, `~/Pictures/Screenshots` y `~/.local/bin`.
 5. Despliega las configuraciones en `~/.config/{hypr,waybar,wofi,rofi,swaync,nvim,wlogout}`.
 6. Genera en `~/.local/bin`: `screenshot.sh`, `obs-toggle.sh`, `set-wallpaper.sh`.
-7. Copia los scripts sueltos (`wofi-wifi.sh`, `wallpaper-wipe.sh`, `save_wallpaper.sh`).
+7. Copia los scripts sueltos (`wofi-wifi.sh`, `wallpaper-wipe.sh`, `save_wallpaper.sh`, `restart-waybar.sh`).
 8. Instala el wallpaper Gruvbox en `~/Pictures/Wallpapers/gruvbox.png` y en
    `/usr/share/backgrounds/gruvbox.png` (lo usa también el greeter de SDDM).
 9. Aplica `/etc/sddm.conf` y `theme.conf.user` de sugar-candy.
@@ -100,6 +100,13 @@ Hyprland --version; waybar --version; wofi --version; wpctl status
 systemctl status NetworkManager bluetooth sddm
 ```
 
+Waybar no tiene persistencia propia: se lanza en cada inicio de sesión con
+`exec-once = waybar` en `~/.config/hypr/hyprland.conf`. Para reiniciarlo sin
+cerrar la sesión usa `SUPER + Ctrl + B` (equivale a
+`~/.local/bin/restart-waybar.sh`). `install.sh` desactiva automáticamente un
+`exec-once = waybar` duplicado en `workflows.conf` / `workflows/default.conf` y
+guarda el original en el backup.
+
 ## Atajos principales (SUPER = tecla Windows)
 
 | Atajo | Acción |
@@ -107,6 +114,7 @@ systemctl status NetworkManager bluetooth sddm
 | `SUPER + Return` | kitty |
 | `SUPER + D` / `SUPER + Space` | launcher (wofi / rofi) |
 | `SUPER + B` / `SUPER + Shift + B` | Firefox / ventana privada |
+| `SUPER + Ctrl + B` | reiniciar waybar |
 | `SUPER + E` / `SUPER + Y` | Thunar / yazi en terminal |
 | `SUPER + W` | selector de Wi-Fi (wofi + nmcli) |
 | `SUPER + Escape` / `SUPER + X` | hyprlock / menú de apagado (wlogout) |

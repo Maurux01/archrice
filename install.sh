@@ -176,6 +176,19 @@ deploy_dotfiles() {
     fi
   done
 
+  # HyDE/workflows: desactivar un segundo exec-once de waybar si el usuario
+  # viene de una config previa que hace source de workflows.
+  local wf backed
+  for wf in "$HOME/.config/hypr/workflows.conf" \
+            "$HOME/.config/hypr/workflows/default.conf"; do
+    [ -f "$wf" ] || continue
+    grep -Eq '^[[:space:]]*exec-once[[:space:]]*=[[:space:]]*waybar' "$wf" || continue
+    backed="$bk/$(basename "$wf").bak"
+    cp "$wf" "$backed" 2>/dev/null || true
+    sed -i -E 's|^[[:space:]]*exec-once[[:space:]]*=[[:space:]]*waybar.*$|# waybar se lanza una sola vez desde hyprland.conf (archrice)|' "$wf"
+    ok "waybar duplicado desactivado en ${wf#$HOME/.config/hypr/}"
+  done
+
   # Configuraciones completas: waybar, swaync, wofi, rofi, nvim, wlogout
   local d
   for d in waybar swaync wofi rofi nvim wlogout; do
@@ -190,6 +203,7 @@ deploy_dotfiles() {
   mkdir -p "$HOME/.local/bin"
   local s target
   for s in "$dot/hypr/script/save_wallpaper.sh" \
+           "$dot/hypr/script/restart-waybar.sh" \
            "$dot/swww/wallpaper-wipe.sh" \
            "$dot/wofi/wofi-wifi.sh"; do
     if [ -f "$s" ]; then

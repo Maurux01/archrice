@@ -47,7 +47,7 @@ PACKAGES=(
 
 CONFIG_DIRS=(waybar swaync wofi rofi nvim wlogout)
 HYPR_FILES=(hyprland.conf keybindings.conf windowrules.conf monitors.conf hyprlock.conf hypridle.conf)
-HELPERS=(save_wallpaper.sh wallpaper-wipe.sh wofi-wifi.sh screenshot.sh obs-toggle.sh set-wallpaper.sh)
+HELPERS=(save_wallpaper.sh restart-waybar.sh wallpaper-wipe.sh wofi-wifi.sh screenshot.sh obs-toggle.sh set-wallpaper.sh)
 
 confirm() {
   echo -e "${RED}⚠  Esto desinstalará los paquetes y configuraciones de archrice.${NC}"
